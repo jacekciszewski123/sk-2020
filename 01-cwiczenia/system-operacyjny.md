@@ -4,11 +4,12 @@
 
 
 1. Z wykorzystaniem maszyny wirtualnej, zainstaluj SO oraz wypisz parametry konfiguracji IP tj:
-   * Adres
-   * Maska
-   * Adres bramy
-   * DNS 1
-   * DNS 2
+   * Adres *ip addr* 10.0.2.15
+   * Maska *ip addr* 10.0.2.15/24
+   * Adres bramy  *ip route show* 10.0.2.2
+   * DNS 1 *cat /etc/resolv.conf* 8.8.8.8
+   * DNS 2 *car /etc/resolv.conf* 8.8.4.4
+   * podgląd adresu ip strony: *nslookup google.pl*
     
     Powyższe parametry uzyskaj na wszystkich z wymienionych systemów
 
@@ -18,9 +19,9 @@
    * Windows 
 
 2. Sprawdź oraz przygotuj charakterystykę dla przykładowego urządzenia w Twojej sieci domowej
-   * Adres
-   * Maska
-   * Adres bramy
+   * Adres 192.168.0.149
+   * Maska 255.255.255.0
+   * Adres bramy 192.168.0.1
    * DNS 1
    * DNS 2
   
