@@ -20,9 +20,9 @@
    * Windows 
 
 2. Sprawdź oraz przygotuj charakterystykę dla przykładowego urządzenia w Twojej sieci domowej
-   * Adres
-   * Maska
-   * Adres bramy
+   * Adres -ipconfig- 192.168.0.149
+   * Maska -ipconfig- 255.255.255.0
+   * Adres bramy -ipconfig- 192.168.0.1
    * DNS 1
    * DNS 2
   
