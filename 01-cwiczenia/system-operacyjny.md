@@ -23,7 +23,7 @@
    * Adres -ipconfig- 192.168.0.149
    * Maska -ipconfig- 255.255.255.0
    * Adres bramy -ipconfig- 192.168.0.1
-   ? * DNS 1 -C:\Windows\System32\drivers\etc\hosts- 127.0.0.1
+   * DNS 1 -C:\Windows\System32\drivers\etc\hosts- 127.0.0.1 (nie wiem o ocb)
    * DNS 2 -nslookup- dns.google 8.8.8.8
   
     Przygotuj dokumentację graficzną Twojej sieci domowej, uwzględnij adresy i urządzenia
