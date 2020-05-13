@@ -4,7 +4,7 @@
 
 
 1. Z wykorzystaniem maszyny wirtualnej, zainstaluj SO oraz wypisz parametry konfiguracji IP tj:
-   * Adres *ip addr*
+   * Adres -ip addr-
    * Maska
    * Adres bramy
    * DNS 1
