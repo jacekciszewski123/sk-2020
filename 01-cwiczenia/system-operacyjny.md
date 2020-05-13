@@ -4,11 +4,13 @@
 
 
 1. Z wykorzystaniem maszyny wirtualnej, zainstaluj SO oraz wypisz parametry konfiguracji IP tj:
-   * Adres -ip addr-
-   * Maska
-   * Adres bramy
-   * DNS 1
-   * DNS 2
+   * Adres -ip addr- 10.0.2.15
+   * Maska -ip addr- 10.0.2.15/24
+   * Adres bramy -ip route show- 10.0.2.2
+   * DNS 1 -cat /etc/resolv.conf- (wyswietl zawartosc pliku resolv.conf - zawiera dnsy) 8.8.8.8
+   * DNS 2 -cat /etc/resolv.conf- 8.8.4.4
+   *podgląd adresu ip -nslookup google.pl-
+   
     
     Powyższe parametry uzyskaj na wszystkich z wymienionych systemów
 
