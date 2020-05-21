@@ -2,11 +2,11 @@
 
 
 * routing
-    * dodaj trasę default -> ip route add default via (ip przez co ma iść-router-)
+    * dodaj trasę default -> ip route add default via (ip przez co ma iść -router-)
     * dodaj trasę przez bramę
-    * dodaj trasę przez interfejs -> ip route add (ip do jakiej sieci chce iść) via (adre routera)
-    * usuń trasę ip route delete (ip) via (ip)
-    * zmień trasę -> ip replace (ip) dev 
+    * dodaj trasę przez interfejs -> ip route add (ip do jakiej sieci chce iść -cała sieć- / MASKA) via (ip przez które mogę-ip routera)
+    * usuń trasę ip route delete (ip/MASKA) via (ip)
+    * zmień trasę -> ip replace (ip/MASKA) dev 
     * pobierz trasę dla adresu -> ip route get (ip)
      
 ### ip 
