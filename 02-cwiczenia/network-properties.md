@@ -114,7 +114,7 @@ Dlaczego? Jak? Co? :)
 | Lokalizacja pliku z konfiguracją sieci| /etc/networl/interfaces| |
 | UP -> Wyłączenie interfejsu sieciowego|ip link set eth1 up | |
 | DOWN -> Włączenie interfejsu sieciowego| ip link set eth1 down| |
-| Sprawdzenie obecnych parametrów | | |
+| Sprawdzenie obecnych parametrów |nie bardzo wiem czego dotyczy pytanie | |
 | lista wszystkich interfejsów | ip a | |
 | Które interfejsy jakie porty słuchają |netstat --help -> tam jest wszystko i sobie robie jak chce co chcce np netstat -ltpn| |
 
