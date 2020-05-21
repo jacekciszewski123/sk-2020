@@ -31,8 +31,8 @@ Wejściowe parametry sieci
 Weryfikacja połączenia
 
 Polecenie
-```
-```
+```ip addr 10.0.14.4/24 dev eth0 <-na PC1
+```ip addr 10.0.15.6/24 dev eth0 <-na PC2
 
 Efekt
 ```
