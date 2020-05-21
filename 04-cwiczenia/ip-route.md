@@ -8,6 +8,12 @@
     * usuń trasę ip route delete (ip/MASKA) via (ip)
     * zmień trasę -> ip replace (ip/MASKA) dev 
     * pobierz trasę dla adresu -> ip route get (ip)
+    
+    odblokowanie przekazywanie pakietow na kompie ktory robi jako routeR: w większości przypadków komputer, który robi za router ma orzyblokowane przekazywanie pakietów dalej
+    
+- echo 1 > /proc/sys/net/ipv4/ip_forward
+- sysctl net.ipv4.ip_forward=1
+- żeby na stałe trzeba plik zamienić jakoś
      
 ### ip 
 | subcommand    |  polecenie   | opis  |
