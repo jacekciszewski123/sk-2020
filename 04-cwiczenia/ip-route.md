@@ -11,8 +11,8 @@
     
     odblokowanie przekazywanie pakietow na kompie ktory robi jako routeR: w większości przypadków komputer, który robi za router ma orzyblokowane przekazywanie pakietów dalej
     
-- echo 1 > /proc/sys/net/ipv4/ip_forward
-- sysctl net.ipv4.ip_forward=1
+- echo 1 > /proc/sys/net/ipv4/ip_forward  |  echo 0 > /proc/sys/net/ipv4/ip_forward
+- sysctl net.ipv4.ip_forward=1  |  sysctl net.ipv4.ip_forward=0
 - żeby na stałe trzeba plik zamienić jakoś
      
 ### ip 
