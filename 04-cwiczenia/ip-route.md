@@ -2,12 +2,12 @@
 
 
 * routing
-    * dodaj trasę default
+    * dodaj trasę default -> ip route add default via (ip przez co ma iść-router-)
     * dodaj trasę przez bramę
-    * dodaj trasę przez interfejs
-    * usuń trasę
-    * zmień trasę
-    * pobierz trasę dla adresu
+    * dodaj trasę przez interfejs -> ip route add (ip do jakiej sieci chce iść) via (adre routera)
+    * usuń trasę ip route delete (ip) via (ip)
+    * zmień trasę -> ip replace (ip) dev 
+    * pobierz trasę dla adresu -> ip route get (ip)
      
 ### ip 
 | subcommand    |  polecenie   | opis  |
