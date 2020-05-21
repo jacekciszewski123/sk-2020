@@ -115,6 +115,6 @@ Dlaczego? Jak? Co? :)
 | UP -> Wyłączenie interfejsu sieciowego|ip link set eth1 up | |
 | DOWN -> Włączenie interfejsu sieciowego| ip link set eth1 down| |
 | Sprawdzenie obecnych parametrów | | |
-| lista wszystkich interfejsów | | |
-| Które interfejsy jakie porty słuchają | | |
+| lista wszystkich interfejsów | ip a | |
+| Które interfejsy jakie porty słuchają |netstat --help -> tam jest wszystko i sobie robie jak chce co chcce np netstat -ltpn| |
 
