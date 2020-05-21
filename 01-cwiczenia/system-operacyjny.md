@@ -33,7 +33,7 @@
 
 4. Dlaczego umiejętnosci z zakresu sieci komputerowych mogą mi się przydać? :)
     -do znalezienia pracy w obszarze administrowania itp
-    -w życiu do nałożenia kontroli/blokad na sieć domową w celu ograniczeń różnego typu np. dzieciom
+    -w życiu do nałożenia kontroli/blokad na sieć domową w celu ograniczeń różnego typu np. dzieciom (wycinanie dostepu do serwerow, drukarek i innych urzadzen)
     -do zaliczenia egzaminu u dr inż. T. Wilusza
 
 
