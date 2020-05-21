@@ -33,9 +33,10 @@ Weryfikacja połączenia
 Polecenie
 ip addr 10.0.14.4/24 dev eth0 <-na PC1
 ip addr 10.0.15.6/24 dev eth0 <-na PC2
+ip addr flush eth0 <- wyczysci ustawienia
 
 Efekt
-```
+Reczne ustawienie adresow ip na PC1 i PC2. Jednak po restarcie wszysto sie traci
 ```
 
 Statyczna konfiguracja parametrów połączenia
@@ -57,12 +58,26 @@ Wejściowe parametry sieci
 Weryfikacja połączenia
 
 Polecenie
-```
-```
+
+vi /etc/network/interfaces
+    
+edytorem vi zmieniam recznie w PC1
+auto eth0
+iface etho0 inet STATIC
+ address 192.168.10.10
+ netmask 255.255.255.0
+ hostname localhost
+ 
+ edytorem vi zmieniam recznie w PC2
+auto eth0
+iface etho0 inet STATIC
+ address 192.168.10.11
+ netmask 255.255.255.0
+ hostname localhost
+ 
 
 Efekt
-```
-```
+Udało mi się ustawić statyczny adres IP i maske na interfaceie eth0 w PC1 i PC2, tak że po restarcie itp zachowają mi się wprowadzone dane
 
 Nowa statyczna konfiguracja 
 
