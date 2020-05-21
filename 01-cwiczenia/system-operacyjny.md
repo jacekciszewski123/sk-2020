@@ -32,6 +32,9 @@
    https://www.netacad.com/courses/packet-tracer
 
 4. Dlaczego umiejętnosci z zakresu sieci komputerowych mogą mi się przydać? :)
+    -do znalezienia pracy w obszarze administrowania itp
+    -w życiu do nałożenia kontroli/blokad na sieć domową w celu ograniczeń różnego typu np. dzieciom
+    -do zaliczenia egzaminu u dr Wilusza
 
 
 ### Charakterystyka systemu operacyjnego
