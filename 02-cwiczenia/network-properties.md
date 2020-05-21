@@ -111,9 +111,9 @@ Dlaczego? Jak? Co? :)
 -------------------------
 | Parametr | wartość | komentarz(opcionalny) |
 | ------------- |:-------------:| -----:|
-| Lokalizacja pliku z konfiguracją sieci| | |
-| UP -> Wyłączenie interfejsu sieciowego| | |
-| DOWN -> Włączenie interfejsu sieciowego| | |
+| Lokalizacja pliku z konfiguracją sieci| /etc/networl/interfaces| |
+| UP -> Wyłączenie interfejsu sieciowego|ip link set eth1 up | |
+| DOWN -> Włączenie interfejsu sieciowego| ip link set eth1 down| |
 | Sprawdzenie obecnych parametrów | | |
 | lista wszystkich interfejsów | | |
 | Które interfejsy jakie porty słuchają | | |
