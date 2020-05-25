@@ -106,7 +106,7 @@ Mając dany adres hosta i maskę znajdź:
 | ``ip``    | 192.168.1.145| 
 | ``maska``   | 255.255.255.128 /25 BO BINARNIE 25 JEDYNEK I 7 ZER| 
 | ``adres sieci``   | MNOŻENIE BINARNE ADRESU Z MASKA  |
-| ``liczba hostów``   | 2^(32-25)-2 |
+| ``liczba hostów``   | 2^(32-25)-2=126 |
 | ``host - min``   | adres sieci + 1 -> mnozenie binarne adresu z maska +1 | 
 | ``host - max``   | adres rozgloszeniowy - 1 | 
 | ``broadcast``   | (koniec sieci) binarna suma adresu sieci i odwrotnosci maski | 
