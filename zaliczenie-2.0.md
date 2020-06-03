@@ -6,7 +6,7 @@ Organizacja planuje ulepszyć działanie istniejącej sieci biurowej.
 
 ## Schemat
 
-![zadanie 1](office.svg.url)
+![zadanie 1](office.svg.uri)
 
 ## Wymagania
 
