@@ -102,4 +102,4 @@ Teraz wystarczy na tym urządzeniu w pliku ``/etc/network/interfaces`` dodać od
 
 ``Auto eth0  
 Iface eth0 inet dhcp  
-Hostname localhost
+Hostname localhost``
