@@ -34,7 +34,7 @@ W sieci pracują komputery biurowe oraz urządzenia siecowe współdzielące zas
     5. Inne jeżeli wykorzystane
     
 ## SIEĆ: 10.10.8.0/22
-#MASKA: 255.255.252.0
+# MASKA: 255.255.252.0
 
 I.	PC-ROUTER-NAT:
 A.	PODSTAWOWA-KONFIGURACJA-PC-ROUTER-NAT
