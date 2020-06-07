@@ -26,11 +26,11 @@ Range mówi nam w jakim zakresie nasza maszyna ma przydzielać adresy IP, option
 
 ![](4.png)
 
-Zapisujemy ustawienia i restartujemy usługę ``rc-serveice dhcpd restart``.  
+Zapisujemy ustawienia i restartujemy usługę ``rc-service dhcpd restart``.  
 Od tego momentu nasz PC-ROUTER-NAT, każdemu nowemu urządzeniu będzie przydzielał adresy IP z zakresu 10.10.9.1-10.10.11.254, gateway-em 10.10.8.1 oraz DNS’ami 8.8.8.8 oraz 8.8.4.4 w seici 10.10.8.0/22.
 
 ## NAT-PC-ROUTER-NAT
-W piewszym kroku uruchamiamy przekazywanie pakietów. Możemy to zrobić komendą ``sysctl net.ipv4.ip_forward=1``. Następnie dodajemy odpowiedni wpis, aby po restarcie lub awarii naszego PC-ROUTER-NAT zachowały się wszystkie nasze konfiguracje.  Zrobimy to poleceniem ``echo „sysctl net.ipv4.ip_forward=1” > /etc/syscel.d/01—network.conf``.  
+W piewszym kroku uruchamiamy przekazywanie pakietów. Możemy to zrobić komendą ``sysctl net.ipv4.ip_forward=1``. Następnie dodajemy odpowiedni wpis, aby po restarcie lub awarii naszego PC-ROUTER-NAT zachowały się wszystkie nasze konfiguracje.  Zrobimy to poleceniem ``echo „sysctl net.ipv4.ip_forward=1” > /etc/sysctl.d/01—network.conf``.  
 Od tego momentu przekierowanie pakietów włączy się automatycznie.
 
 W kolejnym kroku uruchomimy translację adresów – NAT, czyli ukrywanie prywatnego adresu IP. Zmiana prywatnego na publiczny, którym się posługujemy w sieci. Jest nam to potrzebne, aby urządzenia które zostaną skonfigurowane w zadany sposób mogły się połączyć z internetem.
@@ -91,7 +91,7 @@ Każde nowe urządzenie w firmie po protokole DHCP uzyska pełną konfigurację 
 * Drugą metodą jest ustawienie statycznego IP na urządzeniach poprzez usługę DHCP. Na PC-ROUTER-NAT w pliku ``/etc/dhcp/dhcpd.conf`` dodajemy odpowiedni wpis wraz z adresem MAC urządzenia do którego chcemy przypisać stałe IP. Pozwoli nam to na przesłanie temu urządzeniu pełnej konfiguracji ustawień. Nie będzie już konieczna modyfikacja ręczna jak to miało miejsce w powyższym przykładzie.
 
 ``Host soundbar {  
-Hardware ethernet adres mac urządzenia;  
+Hardware ethernet *adres MAC urządzenia*;  
 Fixed-address *adres ip który chcemy przypisać statycznie*;  
 }``  
 W tym przypadku dodałem statyczny adres IP 10.10.8.52 urządzeniu o adresie MAC 08:00:27:1f:d6:03 
