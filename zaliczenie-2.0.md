@@ -34,10 +34,10 @@ W sieci pracują komputery biurowe oraz urządzenia siecowe współdzielące zas
     5. Inne jeżeli wykorzystane
     
 ## SIEĆ: 10.10.8.0/22
-# MASKA: 255.255.252.0
+## MASKA: 255.255.252.0
 
-I.	PC-ROUTER-NAT:
-A.	PODSTAWOWA-KONFIGURACJA-PC-ROUTER-NAT
+# PC-ROUTER-NAT:
+## PODSTAWOWA-KONFIGURACJA-PC-ROUTER-NAT
 
 Wrzucamy 2 karty sieciowe.
 Karta eth0 podłaczona do sieci NAT oraz kartę eth1 podłączoną do sieci SIEĆNAT-lan1.
@@ -45,14 +45,14 @@ Konfigurujemy dwa interfejsy sieciowe w pliku /etc/network/interfaces. ETH0-dyna
 Komendą „rc-service networking restart” restartujemy ustawienia naszych kart sieciowych. 
 Od tej chwili nasze karty sieciowe na PC-ROUTER-NAT są skonfigurowane. Możemy to podejrzeć komendą „ip a”. 
 
-B.	DHCP-PC-ROUTER-NAT
+## DHCP-PC-ROUTER-NAT
 W kolejnym kroku na naszym PC-ROUTER-NAT instalujemy usługę dhcp oraz dodajemy go do autostartu naszej maszyny. Unikniemy w ten sposób konieczności ręcznego uruchamiania usługi dhcp po restarcie/awarii maszyny – „apk add dhcp”, „rc-update add dhcpd”. 
 Kolejnym krokiem jest skonfigurowanie usługi dhcp w katalogu /etc/dhcp/dhcpd.conf.
 Ustawiamy odpowiednią sieć, w naszym przypadku 10.10.8.0 maskę 255.255.252.0. Range mówi nam w jakim zakresie nasza maszyna ma przydzielać adresy IP. Ustawiamy również option router. Jest to nic innego jak nasza brama-adres ip routera, przez którą inne urządzenia będą się łączyć z siecią rozległą (będą miały dostęp do internetu). W naszym jest to 10.10.8.1. Option domain-same-server (DNS) – na razie wrzućmy googlowskie 8.8.8.8 oraz 8.8.4.4.  
 Zapisujemy ustawienia i restartujemy usługę „rc-serveice dhcpd restart”.
 Od tego momentu nasz PC-ROUTER-NAT, każdemu nowemu urządzeniu będzie przydzielał adresy ip z zakresu 10.10.9.1-10.10.11.254, gateway-em 10.10.8.1 oraz dns’ami 8.8.8.8 oraz 8.8.4.4 w seici 10.10.8.0/22.
 
-C.	NAT-PC-ROUTER-NAT
+## NAT-PC-ROUTER-NAT
 W Piewszym kroku uruchamiamy przekazywanie pakietów. Możemy to zrobić komendą „sysctl net.ipv4.ip_forward=1”. Następnie dodajemy odpowiedni wpis, aby po restarcie/awarii naszego PC-ROUTER-NAT zachowały się wszystkie nasze konfiguracje.  Zrobimy to poleceniem „echo „sysctl net.ipv4.ip_forward=1” > /etc/syscel.d/01—network.conf”.Od tego momentu po restarcie przekerowanie pakietów włączy się automatycznie.
 W kolejnym kroku uruchomimy translacje adresów – NAT, czyli ukrywanie prywatnego adresu IP. Zmiana prywatnego w publiczny, którym się posugujemy w sieci. Jest nam to potrzebne, aby urządzenia które zostaną skonfigurowane w zadany sposób mogły się połączyć z internetem. 
 Modyfikacja tablicy NAT-u.
@@ -62,7 +62,7 @@ W naszej maszynie wpisujemy „iptables –t nat –A POSTROUTING –o eth0 –j
 Ostatnim krokiem jest zapisanie tego wpisu na stałe programie iptables oraz dodanie programu do autostartu systemu. Zrobimy to komendą „/etc/init.d/iptables save” oraz  „rc-update add iptables”. 
 Od tego momentu po starcie naszego PC-ROUTER-NAT wczyta się automatycznie program iptables z dokonanym wpisem o translacji prywatnych adresów ip na publiczne adresy ip.
 
-D.	DNS-PC-ROUTER-NAT
+## DNS-PC-ROUTER-NAT
 Ostatnią rzeczą, która nam została do skonfigurowania na naszym PC-ROUTER-NAT jest DNS.
 W pierwszym kroku instalujemy program DNSMASQ – „apk add dnsmasq” oraz wrzucamy do autostartu „rc-update add dnsmasq”.: 
 W kolejnym kroku edytujemy plik hosts w katalogu /etc/hosts. Chcemy, aby kluczowe zasoby 
@@ -74,7 +74,7 @@ Jak już wiemy adres 10.10.8.1 jest to adres naszego routera. Pozostałe dwa adr
 Wróćmy teraz do naszych DNS-ów. Edytujemy więc nasz plik dhcpd.conf w katalogu /etc/dhcp/dhcpd.conf i dokonujemy odpowieniego wpisu w „option domain-name-server”. Po takiej niewielkiej zaminie komunikacja z tymi zasobami zawsze rozwiąże się na ustalonym adresie IP z pliku hosts, gdzie w pierwszej kolejności zagląda system po próbie komunikacji. 
 
 
-II.	POZOSTAŁE URZĄDZENIA (serwer/drukarka-static, inne urządzenia-dhcp)
+# POZOSTAŁE URZĄDZENIA (serwer/drukarka-static, inne urządzenia-dhcp)
 Teraz pora na konfiguracje naszych urządzeń w biurze. Serwer oraz drukarka mają posiadać stałe IP celem zminimalizowania potrzeby rekonfiguracji ustawień klientów. Tak więc na serwerze i drukarce edytujemy interfejs karty sieciowej eth0 na statyczny z odpowiednim adresem, który ustaliliśmy wcześniej SERWER-10.10.8.51, DRUKARKA 10.10.8.50. Ustawiamy brame na 10.10.8.1, czyli nasz PC-ROUTER-NAT, co nam pozwoli na połączenie z siecią. Edytujemy również plik z DNS-ami /etc/resolv.com i wpsujemy ręcznie „nameserver 10.10.8.1” 
 
  
