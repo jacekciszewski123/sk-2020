@@ -36,7 +36,8 @@ W kolejnym kroku uruchomimy translacje adresów – NAT, czyli ukrywanie prywatn
 Aby to zrobić, trzeba dodać wpis do tablicy NAT-u.
 Potrzebny nam jest do tego program ``iptables``. Instalujemy go na naszej maszynie komendą ``apk add iptables``.
 IPTABLES w swoich „funkcjach” ma obsługę NAT'u. 
-W naszej maszynie wpisujemy ``iptables –t nat –A POSTROUTING –o eth0 –j MASQUERADE``. Oznacza to *iptables (wywołujemy program iptables) –t (target/cel jakiej tablicy dotyczy modyfkacja) nat –A (APPEND/DODAJ WPIS do POSTROUTING – CZYLI MODYFIKACJA PAKIETU PO ODEBRANIU PAKIETU) –output (wszystko co wychodzi na eth0 będą poddane operacji) eth0 –j MASQUERADE (maskowanie adresu prywatnego pod adres publiczny)*.
+W naszej maszynie wpisujemy ``iptables –t nat –A POSTROUTING –o eth0 –j MASQUERADE``.
+Oznacza to iptables (*wywołujemy program iptables*) –t (*target/cel jakiej tablicy dotyczy modyfkacja*) nat –A (*append/dodaj wpis do POSTROUTING – czyli modyfikacja pakietu po odebraniu*) –output (*wszystko co wychodzi na ... będą poddane operacji*) eth0 –j MASQUERADE (*maskowanie adresu prywatnego pod adres publiczny*).
 Ostatnim krokiem jest zapisanie tego wpisu na stałe programie iptables oraz dodanie programu do autostartu systemu. Zrobimy to komendą ``/etc/init.d/iptables save`` oraz  ``rc-update add iptables``.
 
 ![](5.png)
@@ -49,11 +50,11 @@ W pierwszym kroku instalujemy program DNSMASQ – ``apk add dnsmasq`` oraz wrzuc
 
 ![](6.png)
 
-W kolejnym kroku edytujemy plik hosts w katalogu ``/etc/hosts``. Chcemy, aby kluczowe zasoby 
+W kolejnym kroku edytujemy plik hosts w katalogu ``/etc/hosts``. Chcemy, aby kluczowe zasoby: 
 * Erp.mojaorganizacja.pl rozwiązał się na adresie 10.10.8.51
 * Drukarka.mojaorganizacja.pl na 10.10.8.50
 * Router.mojaorganizacja.pl na 10.10.8.1
-Jak już wiemy adres 10.10.8.1 jest to adres naszego routera. Pozostałe dwa adresy to adresy, które zostały przypisane statycznie do serwera 10.10.8.51 i drukarki 10.10.8.50 w naszej firmie. 
+Jak już wiemy, adres 10.10.8.1 jest to adres naszego routera. Pozostałe dwa adresy to adresy, które zostały przypisane statycznie do serwera 10.10.8.51 i drukarki 10.10.8.50 w naszej firmie. 
 
 ![](7.png)
 
@@ -62,7 +63,7 @@ Wróćmy teraz do naszych DNS'ów. Edytujemy więc nasz plik dhcpd.conf w katalo
 ![](8.png)
 
 # POZOSTAŁE URZĄDZENIA (serwer/drukarka-static, inne urządzenia-dhcp)
-* Teraz pora na konfiguracje naszych urządzeń w biurze. Serwer oraz drukarka mają posiadać stałe IP celem zminimalizowania potrzeby rekonfiguracji ustawień klientów. Tak więc na serwerze i drukarce edytujemy interface karty sieciowej eth0 na statyczny z odpowiednim adresem, który ustaliliśmy wcześniej ``SERWER-10.10.8.51``, ``DRUKARKA 10.10.8.50``. Ustawiamy brame na ``10.10.8.1``, czyli nasz PC-ROUTER-NAT, co nam pozwoli na połączenie z siecią. Edytujemy również plik z DNS'ami ``/etc/resolv.conf`` i wpsujemy ręcznie ``nameserver 10.10.8.1``
+* Teraz pora na konfiguracje naszych urządzeń w biurze. Serwer oraz drukarka mają posiadać stałe IP celem zminimalizowania potrzeby rekonfiguracji ustawień klientów. Tak więc na serwerze i drukarce edytujemy interface karty sieciowej eth0 na statyczny z odpowiednim adresem, który ustaliliśmy wcześniej ``SERWER-10.10.8.51``, ``DRUKARKA 10.10.8.50``. Ustawiamy bramę na ``10.10.8.1``, czyli nasz PC-ROUTER-NAT, co nam pozwoli na połączenie z siecią. Edytujemy również plik z DNS'ami ``/etc/resolv.conf`` i wpisujemy ręcznie ``nameserver 10.10.8.1``
 
 ![](9.png)
 ![](10.png)
@@ -72,7 +73,7 @@ Tak samo robimy na drukarce:
 ![](11.png)
 ![](12.png)
  
-Możemy przejrzeć ustwienia komendą ``ip a``, ``ip route show`` oraz podejrzeć DNS-y ``cat /etc/resolv.conf``. 
+Możemy przejrzeć ustawienia komendą ``ip a``, ``ip route show`` oraz podejrzeć DNS-y ``cat /etc/resolv.conf``. 
 
 ![](13.png)
 ![](14.png)
@@ -81,11 +82,11 @@ Pozostałe urządzenia mają dynamiczną konfigurację tak jak ustaliliśmy na r
 
 ![](15.png)
 
-Każde nowe urządenie w firmie po protokole DHCP uzyska pełną konfigurację sieci zgodnie z naszą wolą. Możemy przejrzeć ustwienia komendą ``ip a``, ``ip route show`` oraz podejrzeć DNS'y ``cat /etc/resolv.conf`` 
+Każde nowe urządenie w firmie po protokole DHCP uzyska pełną konfigurację sieci zgodnie z naszą wolą. Możemy przejrzeć ustawienia komendą ``ip a``, ``ip route show`` oraz podejrzeć DNS'y ``cat /etc/resolv.conf`` 
 
 ![](16.png)
 
-* Drugą metodą jest ustawienie statycznego IP na urządeniach poprzez usługę DHCP. Na PC-ROUTER-NAT w pliku ``/etc/dhcp/dhcpd.conf`` dodajemy odpowiedni wpis wraz z adresem MAC urządzenia do którego chcemy przypisać stałe IP. Pozwoli nam to na przesłanie temu urządzeniu pełnej konfiguraci ustawień. Nie będzie już konieczna modyfikacja ręczna jak to miało miejsce w powyższym przykładzie.
+* Drugą metodą jest ustawienie statycznego IP na urządzeniach poprzez usługę DHCP. Na PC-ROUTER-NAT w pliku ``/etc/dhcp/dhcpd.conf`` dodajemy odpowiedni wpis wraz z adresem MAC urządzenia do którego chcemy przypisać stałe IP. Pozwoli nam to na przesłanie temu urządzeniu pełnej konfiguraci ustawień. Nie będzie już konieczna modyfikacja ręczna jak to miało miejsce w powyższym przykładzie.
 
 ``Host soundbar {
 Hardware ethernet adres mac urządzenia;
