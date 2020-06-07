@@ -92,7 +92,7 @@ Każde nowe urządenie w firmie po protokole DHCP uzyska pełną konfigurację s
 
 ``Host soundbar {  
 Hardware ethernet adres mac urządzenia;  
-Fixed-address adres ip który chcemy przypisać statycznie;  
+Fixed-address *adres ip który chcemy przypisać statycznie*;  
 }``  
 W tym przypadku dodałem statyczny adres IP 10.10.8.52 urządzeniu o adresie MAC 08:00:27:1f:d6:03 
 
