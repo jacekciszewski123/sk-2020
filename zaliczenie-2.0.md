@@ -29,9 +29,11 @@ Zapisujemy ustawienia i restartujemy usługę ``rc-serveice dhcpd restart``.
 Od tego momentu nasz PC-ROUTER-NAT, każdemu nowemu urządzeniu będzie przydzielał adresy ip z zakresu 10.10.9.1-10.10.11.254, gateway-em 10.10.8.1 oraz dns’ami 8.8.8.8 oraz 8.8.4.4 w seici 10.10.8.0/22.
 
 ## NAT-PC-ROUTER-NAT
-W Piewszym kroku uruchamiamy przekazywanie pakietów. Możemy to zrobić komendą ``sysctl net.ipv4.ip_forward=1``. Następnie dodajemy odpowiedni wpis, aby po restarcie/awarii naszego PC-ROUTER-NAT zachowały się wszystkie nasze konfiguracje.  Zrobimy to poleceniem ``echo „sysctl net.ipv4.ip_forward=1” > /etc/syscel.d/01—network.conf``.Od tego momentu po restarcie przekerowanie pakietów włączy się automatycznie.
-W kolejnym kroku uruchomimy translacje adresów – NAT, czyli ukrywanie prywatnego adresu IP. Zmiana prywatnego w publiczny, którym się posługujemy w sieci. Jest nam to potrzebne, aby urządzenia które zostaną skonfigurowane w zadany sposób mogły się połączyć z internetem. 
-Modyfikacja tablicy NAT-u.
+W piewszym kroku uruchamiamy przekazywanie pakietów. Możemy to zrobić komendą ``sysctl net.ipv4.ip_forward=1``. Następnie dodajemy odpowiedni wpis, aby po restarcie lub awarii naszego PC-ROUTER-NAT zachowały się wszystkie nasze konfiguracje.  Zrobimy to poleceniem ``echo „sysctl net.ipv4.ip_forward=1” > /etc/syscel.d/01—network.conf``.Od tego momentu przekerowanie pakietów włączy się automatycznie.
+
+W kolejnym kroku uruchomimy translacje adresów – NAT, czyli ukrywanie prywatnego adresu IP. Zmiana prywatnego w publiczny, którym się posługujemy w sieci. Jest nam to potrzebne, aby urządzenia które zostaną skonfigurowane w zadany sposób mogły się połączyć z internetem.
+
+Aby to zrobić, trzeba dodać wpis do tablicy NAT-u.
 Potrzeby nam jest do tego program ``iptables``. Instalujemy go na naszej maszynie komendą ``apk add iptables``.
 IPTABLES w swoich „funkcjach” ma obsługę natu. 
 W naszej maszynie wpisujemy ``iptables –t nat –A POSTROUTING –o eth0 –j MASQUERADE``. Oznacza to – iptables (wywołujemy program iptables) –t (target/cel jakiej tablicy dotyczy modyfkacja - w naszym przypadku nat) nat –A (APPEND/DODAJ WPIS do POSTROUTING – CZYLI MODYFIKACJA PAKIETU PO ODEBRANIU PAKIETU) –output (wszystko co wychodzi na eth0 będą poddane operacji) eth0 –j MASQUERADE (maskowanie adresu prywatnego pod adres publiczny).
@@ -60,7 +62,7 @@ Wróćmy teraz do naszych DNS-ów. Edytujemy więc nasz plik dhcpd.conf w katalo
 ![](8.png)
 
 # POZOSTAŁE URZĄDZENIA (serwer/drukarka-static, inne urządzenia-dhcp)
-Teraz pora na konfiguracje naszych urządzeń w biurze. Serwer oraz drukarka mają posiadać stałe IP celem zminimalizowania potrzeby rekonfiguracji ustawień klientów. Tak więc na serwerze i drukarce edytujemy interfejs karty sieciowej eth0 na statyczny z odpowiednim adresem, który ustaliliśmy wcześniej ``SERWER-10.10.8.51``, ``DRUKARKA 10.10.8.50``. Ustawiamy brame na ``10.10.8.1``, czyli nasz PC-ROUTER-NAT, co nam pozwoli na połączenie z siecią. Edytujemy również plik z DNS-ami ``/etc/resolv.conf`` i wpsujemy ręcznie ``nameserver 10.10.8.1``
+* Teraz pora na konfiguracje naszych urządzeń w biurze. Serwer oraz drukarka mają posiadać stałe IP celem zminimalizowania potrzeby rekonfiguracji ustawień klientów. Tak więc na serwerze i drukarce edytujemy interface karty sieciowej eth0 na statyczny z odpowiednim adresem, który ustaliliśmy wcześniej ``SERWER-10.10.8.51``, ``DRUKARKA 10.10.8.50``. Ustawiamy brame na ``10.10.8.1``, czyli nasz PC-ROUTER-NAT, co nam pozwoli na połączenie z siecią. Edytujemy również plik z DNS-ami ``/etc/resolv.conf`` i wpsujemy ręcznie ``nameserver 10.10.8.1``
 
 ![](9.png)
 ![]10.png)
@@ -83,7 +85,7 @@ Każde nowe urządenie w firmie po protokole dhcp uzyska pełną konfigurację s
 
 ![](16.png)
 
-Drugą metodą jest ustawienie statycznego ip na urządeniach poprzez usługę dhcp. Na PC-ROUTER-NAT w pliku ``/etc/dhcp/dhcpd.conf`` dodajemy odpowiedni wpis wraz z adresem mac urządzenia do którego chcemy przypisać stałe ip. Pozwoli nam to na przesłanie temu urządzeniu pełnego zestawu ustawień, bez konieczności konfiguracji ręcznej po różnych plikach tak jak to miało miejsce powyżej.
+* Drugą metodą jest ustawienie statycznego ip na urządeniach poprzez usługę dhcp. Na PC-ROUTER-NAT w pliku ``/etc/dhcp/dhcpd.conf`` dodajemy odpowiedni wpis wraz z adresem mac urządzenia do którego chcemy przypisać stałe ip. Pozwoli nam to na przesłanie temu urządzeniu pełnej konfiguraci ustawień. Nie będzie już konieczna modyfikacja ręczna jak to miało miejsce w powyższym przykładzie.
 
 ``Host soundbar {
 Hardware ethernet adres mac urządzenia;
@@ -93,7 +95,7 @@ W tym przypadku dodałem statyczny adres ip 10.10.8.52 urządzeniu o adresie mac
 
 ![](17.png)
 
-Teraz wystarczy na tym urządzeniu w pliku ``/etc/network/interfaces`` dodaćodpowiedni wpis, aby urządzeniu poprosiło i przydzielenie adresu ip po dhcp, tak jak to robiliśmy poprzednio.
+Teraz wystarczy na tym urządzeniu w pliku ``/etc/network/interfaces`` dodać odpowiedni wpis, aby poprosiło o przydzielenie adresu ip po dhcp, tak jak to robiliśmy poprzednio.
 
 ``Auto eth0
 Iface eth0 inet dhcp
