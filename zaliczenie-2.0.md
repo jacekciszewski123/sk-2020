@@ -65,7 +65,7 @@ Wróćmy teraz do naszych DNS-ów. Edytujemy więc nasz plik dhcpd.conf w katalo
 * Teraz pora na konfiguracje naszych urządzeń w biurze. Serwer oraz drukarka mają posiadać stałe IP celem zminimalizowania potrzeby rekonfiguracji ustawień klientów. Tak więc na serwerze i drukarce edytujemy interface karty sieciowej eth0 na statyczny z odpowiednim adresem, który ustaliliśmy wcześniej ``SERWER-10.10.8.51``, ``DRUKARKA 10.10.8.50``. Ustawiamy brame na ``10.10.8.1``, czyli nasz PC-ROUTER-NAT, co nam pozwoli na połączenie z siecią. Edytujemy również plik z DNS-ami ``/etc/resolv.conf`` i wpsujemy ręcznie ``nameserver 10.10.8.1``
 
 ![](9.png)
-![]10.png)
+![](10.png)
  
 Tak samo robimy na drukarce: 
 
