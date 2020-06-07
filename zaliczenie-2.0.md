@@ -33,13 +33,13 @@ Od tego momentu nasz PC-ROUTER-NAT, każdemu nowemu urządzeniu będzie przydzie
 W piewszym kroku uruchamiamy przekazywanie pakietów. Możemy to zrobić komendą ``sysctl net.ipv4.ip_forward=1``. Następnie dodajemy odpowiedni wpis, aby po restarcie lub awarii naszego PC-ROUTER-NAT zachowały się wszystkie nasze konfiguracje.  Zrobimy to poleceniem ``echo „sysctl net.ipv4.ip_forward=1” > /etc/syscel.d/01—network.conf``.  
 Od tego momentu przekierowanie pakietów włączy się automatycznie.
 
-W kolejnym kroku uruchomimy translacje adresów – NAT, czyli ukrywanie prywatnego adresu IP. Zmiana prywatnego w publiczny, którym się posługujemy w sieci. Jest nam to potrzebne, aby urządzenia które zostaną skonfigurowane w zadany sposób mogły się połączyć z internetem.
+W kolejnym kroku uruchomimy translację adresów – NAT, czyli ukrywanie prywatnego adresu IP. Zmiana prywatnego na publiczny, którym się posługujemy w sieci. Jest nam to potrzebne, aby urządzenia które zostaną skonfigurowane w zadany sposób mogły się połączyć z internetem.
 
 Aby to zrobić, trzeba dodać wpis do tablicy NAT-u.  
 Potrzebny nam jest do tego program ``iptables``. Instalujemy go na naszej maszynie komendą ``apk add iptables``.  
 IPTABLES w swoich „funkcjach” ma obsługę NAT'u.  
 W naszej maszynie wpisujemy ``iptables –t nat –A POSTROUTING –o eth0 –j MASQUERADE``.  
-Oznacza to iptables (*wywołujemy program iptables*) –t (*target/cel jakiej tablicy dotyczy modyfkacja*) nat –A (*append/dodaj wpis do POSTROUTING – czyli modyfikacja pakietu po odebraniu*) –output (*wszystko co wychodzi na ... będą poddane operacji*) eth0 –j MASQUERADE (*maskowanie adresu prywatnego pod adres publiczny*).  
+Oznacza to iptables (*wywołujemy program iptables*) –t (*target/cel jakiej tablicy dotyczy modyfikacja*) nat –A (*append/dodaj wpis do POSTROUTING – czyli modyfikacja pakietu po odebraniu*) –output (*wszystko co wychodzi na ... będą poddane operacji*) eth0 –j MASQUERADE (*maskowanie adresu prywatnego pod adres publiczny*).  
 Ostatnim krokiem jest zapisanie tego wpisu na stałe programie iptables oraz dodanie programu do autostartu systemu. Zrobimy to komendą ``/etc/init.d/iptables save`` oraz  ``rc-update add iptables``.
 
 ![](5.png)
@@ -60,12 +60,12 @@ Jak już wiemy, adres 10.10.8.1 jest to adres naszego routera. Pozostałe dwa ad
 
 ![](7.png)
 
-Wróćmy teraz do naszych DNS'ów. Edytujemy więc nasz plik dhcpd.conf w katalogu ``/etc/dhcp/dhcpd.conf`` i dokonujemy odpowieniego wpisu w ``option domain-name-server 10.10.8.1``. Po takiej niewielkiej zaminie komunikacja z tymi zasobami zawsze rozwiąże się na ustalonym adresie IP z pliku hosts, gdzie w pierwszej kolejności zagląda system po próbie komunikacji. 
+Wróćmy teraz do naszych DNS'ów. Edytujemy więc nasz plik dhcpd.conf w katalogu ``/etc/dhcp/dhcpd.conf`` i dokonujemy odpowieniego wpisu w ``option domain-name-server 10.10.8.1``. Po takiej niewielkiej zmianie komunikacja z tymi zasobami zawsze rozwiąże się na ustalonym adresie IP z pliku hosts, gdzie w pierwszej kolejności zagląda system po próbie komunikacji. 
 
 ![](8.png)
 
 # POZOSTAŁE URZĄDZENIA (serwer/drukarka-static, inne urządzenia-dhcp)
-* Teraz pora na konfiguracje naszych urządzeń w biurze. Serwer oraz drukarka mają posiadać stałe IP celem zminimalizowania potrzeby rekonfiguracji ustawień klientów. Tak więc na serwerze i drukarce edytujemy interface karty sieciowej eth0 na statyczny z odpowiednim adresem, który ustaliliśmy wcześniej ``SERWER-10.10.8.51``, ``DRUKARKA 10.10.8.50``. Ustawiamy bramę na ``10.10.8.1``, czyli nasz PC-ROUTER-NAT, co nam pozwoli na połączenie z siecią. Edytujemy również plik z DNS'ami ``/etc/resolv.conf`` i wpisujemy ręcznie ``nameserver 10.10.8.1``
+* Teraz pora na konfigurację naszych urządzeń w biurze. Serwer oraz drukarka mają posiadać stałe IP celem zminimalizowania potrzeby rekonfiguracji ustawień klientów. Tak więc na serwerze i drukarce edytujemy interface karty sieciowej eth0 na statyczny z odpowiednim adresem, który ustaliliśmy wcześniej ``SERWER-10.10.8.51``, ``DRUKARKA 10.10.8.50``. Ustawiamy bramę na ``10.10.8.1``, czyli nasz PC-ROUTER-NAT, co nam pozwoli na połączenie z siecią. Edytujemy również plik z DNS'ami ``/etc/resolv.conf`` i wpisujemy ręcznie ``nameserver 10.10.8.1``
 
 ![](9.png)
 ![](10.png)
@@ -84,11 +84,11 @@ Pozostałe urządzenia mają dynamiczną konfigurację tak jak ustaliliśmy na r
 
 ![](15.png)
 
-Każde nowe urządenie w firmie po protokole DHCP uzyska pełną konfigurację sieci zgodnie z naszą wolą. Możemy przejrzeć ustawienia komendą ``ip a``, ``ip route show`` oraz podejrzeć DNS'y ``cat /etc/resolv.conf`` 
+Każde nowe urządzenie w firmie po protokole DHCP uzyska pełną konfigurację sieci zgodnie z naszą wolą. Możemy przejrzeć ustawienia komendą ``ip a``, ``ip route show`` oraz podejrzeć DNS'y ``cat /etc/resolv.conf`` 
 
 ![](16.png)
 
-* Drugą metodą jest ustawienie statycznego IP na urządzeniach poprzez usługę DHCP. Na PC-ROUTER-NAT w pliku ``/etc/dhcp/dhcpd.conf`` dodajemy odpowiedni wpis wraz z adresem MAC urządzenia do którego chcemy przypisać stałe IP. Pozwoli nam to na przesłanie temu urządzeniu pełnej konfiguraci ustawień. Nie będzie już konieczna modyfikacja ręczna jak to miało miejsce w powyższym przykładzie.
+* Drugą metodą jest ustawienie statycznego IP na urządzeniach poprzez usługę DHCP. Na PC-ROUTER-NAT w pliku ``/etc/dhcp/dhcpd.conf`` dodajemy odpowiedni wpis wraz z adresem MAC urządzenia do którego chcemy przypisać stałe IP. Pozwoli nam to na przesłanie temu urządzeniu pełnej konfiguracji ustawień. Nie będzie już konieczna modyfikacja ręczna jak to miało miejsce w powyższym przykładzie.
 
 ``Host soundbar {  
 Hardware ethernet adres mac urządzenia;  
