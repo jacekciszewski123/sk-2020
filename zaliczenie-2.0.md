@@ -29,14 +29,14 @@ Zapisujemy ustawienia i restartujemy usługę ``rc-serveice dhcpd restart``.
 Od tego momentu nasz PC-ROUTER-NAT, każdemu nowemu urządzeniu będzie przydzielał adresy IP z zakresu 10.10.9.1-10.10.11.254, gateway-em 10.10.8.1 oraz DNS’ami 8.8.8.8 oraz 8.8.4.4 w seici 10.10.8.0/22.
 
 ## NAT-PC-ROUTER-NAT
-W piewszym kroku uruchamiamy przekazywanie pakietów. Możemy to zrobić komendą ``sysctl net.ipv4.ip_forward=1``. Następnie dodajemy odpowiedni wpis, aby po restarcie lub awarii naszego PC-ROUTER-NAT zachowały się wszystkie nasze konfiguracje.  Zrobimy to poleceniem ``echo „sysctl net.ipv4.ip_forward=1” > /etc/syscel.d/01—network.conf``.Od tego momentu przekerowanie pakietów włączy się automatycznie.
+W piewszym kroku uruchamiamy przekazywanie pakietów. Możemy to zrobić komendą ``sysctl net.ipv4.ip_forward=1``. Następnie dodajemy odpowiedni wpis, aby po restarcie lub awarii naszego PC-ROUTER-NAT zachowały się wszystkie nasze konfiguracje.  Zrobimy to poleceniem ``echo „sysctl net.ipv4.ip_forward=1” > /etc/syscel.d/01—network.conf``.Od tego momentu przekierowanie pakietów włączy się automatycznie.
 
 W kolejnym kroku uruchomimy translacje adresów – NAT, czyli ukrywanie prywatnego adresu IP. Zmiana prywatnego w publiczny, którym się posługujemy w sieci. Jest nam to potrzebne, aby urządzenia które zostaną skonfigurowane w zadany sposób mogły się połączyć z internetem.
 
 Aby to zrobić, trzeba dodać wpis do tablicy NAT-u.
-Potrzeby nam jest do tego program ``iptables``. Instalujemy go na naszej maszynie komendą ``apk add iptables``.
+Potrzebny nam jest do tego program ``iptables``. Instalujemy go na naszej maszynie komendą ``apk add iptables``.
 IPTABLES w swoich „funkcjach” ma obsługę NAT'u. 
-W naszej maszynie wpisujemy ``iptables –t nat –A POSTROUTING –o eth0 –j MASQUERADE``. Oznacza to – iptables (wywołujemy program iptables) –t (target/cel jakiej tablicy dotyczy modyfkacja) nat –A (APPEND/DODAJ WPIS do POSTROUTING – CZYLI MODYFIKACJA PAKIETU PO ODEBRANIU PAKIETU) –output (wszystko co wychodzi na eth0 będą poddane operacji) eth0 –j MASQUERADE (maskowanie adresu prywatnego pod adres publiczny).
+W naszej maszynie wpisujemy ``iptables –t nat –A POSTROUTING –o eth0 –j MASQUERADE``. Oznacza to *iptables (wywołujemy program iptables) –t (target/cel jakiej tablicy dotyczy modyfkacja) nat –A (APPEND/DODAJ WPIS do POSTROUTING – CZYLI MODYFIKACJA PAKIETU PO ODEBRANIU PAKIETU) –output (wszystko co wychodzi na eth0 będą poddane operacji) eth0 –j MASQUERADE (maskowanie adresu prywatnego pod adres publiczny)*.
 Ostatnim krokiem jest zapisanie tego wpisu na stałe programie iptables oraz dodanie programu do autostartu systemu. Zrobimy to komendą ``/etc/init.d/iptables save`` oraz  ``rc-update add iptables``.
 
 ![](5.png)
