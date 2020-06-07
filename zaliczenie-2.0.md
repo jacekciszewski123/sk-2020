@@ -1,5 +1,5 @@
-                                                                                              ### SIEĆ: 10.10.8.0/22
-                                                                                              ### MASKA: 255.255.252.0
+   #### SIEĆ: 10.10.8.0/22
+  #### MASKA: 255.255.252.0
 
 # PC-ROUTER-NAT:
 ## PODSTAWOWA-KONFIGURACJA-PC-ROUTER-NAT
