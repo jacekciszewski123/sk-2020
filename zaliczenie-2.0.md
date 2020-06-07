@@ -33,7 +33,7 @@ W sieci pracują komputery biurowe oraz urządzenia siecowe współdzielące zas
     4. Konfiguracja interfejsów sieciowych
     5. Inne jeżeli wykorzystane
     
-SIEĆ: 10.10.8.0/22
+## SIEĆ: 10.10.8.0/22
 MASKA: 255.255.252.0
 
 I.	PC-ROUTER-NAT:
