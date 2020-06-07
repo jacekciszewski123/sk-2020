@@ -21,7 +21,7 @@ W kolejnym kroku na naszym PC-ROUTER-NAT instalujemy usługę dhcp oraz dodajemy
 ![](3.png)
 
 Kolejnym krokiem jest skonfigurowanie usługi dhcp w katalogu ``/etc/dhcp/dhcpd.conf``.
-Ustawiamy kolejno sieć ``subnet 10.10.8.0``, maskę ``netmask 255.255.252.0``, range ``range 10.10.9.1 10.10.11.254;``, option router ``option routers 10.10.8.1`` oraz option domain-servers ``option domain-servers 8.8.8.8,8.8.4.4``   Range mówi nam w jakim zakresie nasza maszyna ma przydzielać adresy IP, option-routers to nic innego jak nasza brama, czyli adres ip routera, przez którą inne urządzenia będą się łączyć z siecią rozległą (będą miały dostęp do internetu). Option domain-same-server (DNS) – na razie wrzuciliśmy googlowskie `8.8.8.8` oraz `8.8.4.4`.
+Ustawiamy kolejno sieć ``subnet 10.10.8.0``, maskę ``netmask 255.255.252.0``, range ``range 10.10.9.1 10.10.11.254;``, option router ``option routers 10.10.8.1`` oraz option domain-servers ``option domain-servers 8.8.8.8,8.8.4.4``. Range mówi nam w jakim zakresie nasza maszyna ma przydzielać adresy IP, option-routers to nic innego jak nasza brama, czyli adres ip routera, przez którą inne urządzenia będą się łączyć z siecią rozległą (będą miały dostęp do internetu). Option domain-same-server (DNS) – na razie wrzuciliśmy googlowskie 8.8.8.8 oraz 8.8.4.4.
 
 ![](4.png)
 
