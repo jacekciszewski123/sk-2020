@@ -133,7 +133,3 @@ Teraz wystarczy na tym urządzeniu w pliku /etc/network/interfaces dodaćodpowie
 “Auto eth0
 Iface eth0 inet dhcp
 Hostname localhost”
-
-
-
-
