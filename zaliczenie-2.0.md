@@ -5,7 +5,7 @@ Organizacja planuje ulepszyć działanie istniejącej sieci biurowej.
 1. Zaprojektuj oraz udokumentuj konfigurację prototypu rozwiązania z wykorzystaniem oprogramowania ``VirtualBox`` lub podobnego. 
 
 ## Schemat
-![](1.png)
+
 ![zadanie 1](office.svg)
 
 ## Wymagania
