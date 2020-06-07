@@ -16,12 +16,12 @@ Od tej chwili nasze karty sieciowe na PC-ROUTER-NAT są skonfigurowane. Możemy 
 ![](2.png)
 
 ## DHCP-PC-ROUTER-NAT
-W kolejnym kroku na naszym PC-ROUTER-NAT instalujemy usługę dhcp oraz dodajemy go do autostartu naszej maszyny. Unikniemy w ten sposób konieczności ręcznego uruchamiania usługi dhcp po restarcie/awarii maszyny – ``apk add dhcp``, ``rc-update add dhcpd``.
+W kolejnym kroku na naszym PC-ROUTER-NAT instalujemy usługę dhcp oraz dodajemy go do autostartu naszej maszyny. Unikniemy w ten sposób konieczności ręcznego uruchamiania usługi dhcp po restarcie lub awarii – ``apk add dhcp``, ``rc-update add dhcpd``.
 
 ![](3.png)
 
 Kolejnym krokiem jest skonfigurowanie usługi dhcp w katalogu ``/etc/dhcp/dhcpd.conf``.
-Ustawiamy odpowiednią sieć, w naszym przypadku ``10.10.8.0`` maskę ``255.255.252.0``. Range mówi nam w jakim zakresie nasza maszyna ma przydzielać adresy IP. Ustawiamy również option router. Jest to nic innego jak nasza brama-adres ip routera, przez którą inne urządzenia będą się łączyć z siecią rozległą (będą miały dostęp do internetu). W naszym jest to ``10.10.8.1``. Option domain-same-server (DNS) – na razie wrzućmy googlowskie ``8.8.8.8`` oraz ``8.8.4.4``.
+Ustawiamy odpowiednią sieć. W naszym przypadku ``10.10.8.0`` maskę ``255.255.252.0``. Range mówi nam w jakim zakresie nasza maszyna ma przydzielać adresy IP. Ustawiamy również option router. Jest to nic innego jak nasza brama, czyli adres ip routera, przez którą inne urządzenia będą się łączyć z siecią rozległą (będą miały dostęp do internetu). W naszym jest to ``10.10.8.1``. Option domain-same-server (DNS) – na razie wrzućmy googlowskie ``8.8.8.8`` oraz ``8.8.4.4``.
 
 ![](4.png)
 
