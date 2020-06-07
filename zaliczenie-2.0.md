@@ -100,6 +100,6 @@ W tym przypadku dodałem statyczny adres IP 10.10.8.52 urządzeniu o adresie MAC
 
 Teraz wystarczy na tym urządzeniu w pliku ``/etc/network/interfaces`` dodać odpowiedni wpis, aby poprosiło o przydzielenie adresu IP po DHCP, tak jak to robiliśmy poprzednio.
 
-Auto eth0  
+``Auto eth0  
 Iface eth0 inet dhcp  
 Hostname localhost
