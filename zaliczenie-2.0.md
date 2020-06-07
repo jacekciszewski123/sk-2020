@@ -6,7 +6,7 @@
 
 Wrzucamy 2 karty sieciowe.
 Karta eth0 podłaczona do sieci NAT oraz kartę eth1 podłączoną do sieci SIECNAT-lan1.
-Konfigurujemy dwa interfejsy sieciowe w pliku ``/etc/network/interfaces``. ETH0-dynamicznie, ETH1-statycznie z adresem ``10.10.8.1`` z początku naszej sieci zgodnie z konwencją oraz maską ``255.255.252.0``. 
+Konfigurujemy dwa interfejsy sieciowe w pliku ``/etc/network/interfaces``. eth0-dynamicznie, eth1-statycznie z adresem ``10.10.8.1`` z początku naszej sieci zgodnie z konwencją oraz maską ``255.255.252.0``. 
 Komendą ``rc-service networking restart`` restartujemy ustawienia naszych kart sieciowych.
 
 ![](1.png)
