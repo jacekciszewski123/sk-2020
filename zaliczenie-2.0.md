@@ -21,23 +21,25 @@ W kolejnym kroku na naszym PC-ROUTER-NAT instalujemy usługę DHCP oraz dodajemy
 ![](3.png)
 
 Kolejnym krokiem jest skonfigurowanie usługi DHCP w katalogu ``/etc/dhcp/dhcpd.conf``.
-Ustawiamy kolejno sieć ``subnet 10.10.8.0``, maskę ``netmask 255.255.252.0``, range ``range 10.10.9.1 10.10.11.254;``, option router ``option routers 10.10.8.1`` oraz option domain-servers ``option domain-servers 8.8.8.8,8.8.4.4``. Range mówi nam w jakim zakresie nasza maszyna ma przydzielać adresy IP, option-routers to nic innego jak nasza brama, czyli adres IP routera, przez którą inne urządzenia będą się łączyć z siecią rozległą (będą miały dostęp do internetu). Option domain-same-server (DNS) – na razie wrzuciliśmy googlowskie 8.8.8.8 oraz 8.8.4.4.
+Ustawiamy kolejno sieć ``subnet 10.10.8.0``, maskę ``netmask 255.255.252.0``, range ``range 10.10.9.1 10.10.11.254;``, option router ``option routers 10.10.8.1`` oraz option domain-servers ``option domain-servers 8.8.8.8,8.8.4.4``.  
+Range mówi nam w jakim zakresie nasza maszyna ma przydzielać adresy IP, option-routers to nic innego jak nasza brama, czyli adres IP routera, przez którą inne urządzenia będą się łączyć z siecią rozległą (będą miały dostęp do internetu). Option domain-same-server (DNS) – na razie wrzuciliśmy googlowskie 8.8.8.8 oraz 8.8.4.4.
 
 ![](4.png)
 
-Zapisujemy ustawienia i restartujemy usługę ``rc-serveice dhcpd restart``.
+Zapisujemy ustawienia i restartujemy usługę ``rc-serveice dhcpd restart``.  
 Od tego momentu nasz PC-ROUTER-NAT, każdemu nowemu urządzeniu będzie przydzielał adresy IP z zakresu 10.10.9.1-10.10.11.254, gateway-em 10.10.8.1 oraz DNS’ami 8.8.8.8 oraz 8.8.4.4 w seici 10.10.8.0/22.
 
 ## NAT-PC-ROUTER-NAT
-W piewszym kroku uruchamiamy przekazywanie pakietów. Możemy to zrobić komendą ``sysctl net.ipv4.ip_forward=1``. Następnie dodajemy odpowiedni wpis, aby po restarcie lub awarii naszego PC-ROUTER-NAT zachowały się wszystkie nasze konfiguracje.  Zrobimy to poleceniem ``echo „sysctl net.ipv4.ip_forward=1” > /etc/syscel.d/01—network.conf``.Od tego momentu przekierowanie pakietów włączy się automatycznie.
+W piewszym kroku uruchamiamy przekazywanie pakietów. Możemy to zrobić komendą ``sysctl net.ipv4.ip_forward=1``. Następnie dodajemy odpowiedni wpis, aby po restarcie lub awarii naszego PC-ROUTER-NAT zachowały się wszystkie nasze konfiguracje.  Zrobimy to poleceniem ``echo „sysctl net.ipv4.ip_forward=1” > /etc/syscel.d/01—network.conf``.  
+Od tego momentu przekierowanie pakietów włączy się automatycznie.
 
 W kolejnym kroku uruchomimy translacje adresów – NAT, czyli ukrywanie prywatnego adresu IP. Zmiana prywatnego w publiczny, którym się posługujemy w sieci. Jest nam to potrzebne, aby urządzenia które zostaną skonfigurowane w zadany sposób mogły się połączyć z internetem.
 
-Aby to zrobić, trzeba dodać wpis do tablicy NAT-u.
-Potrzebny nam jest do tego program ``iptables``. Instalujemy go na naszej maszynie komendą ``apk add iptables``.
-IPTABLES w swoich „funkcjach” ma obsługę NAT'u. 
-W naszej maszynie wpisujemy ``iptables –t nat –A POSTROUTING –o eth0 –j MASQUERADE``.
-Oznacza to iptables (*wywołujemy program iptables*) –t (*target/cel jakiej tablicy dotyczy modyfkacja*) nat –A (*append/dodaj wpis do POSTROUTING – czyli modyfikacja pakietu po odebraniu*) –output (*wszystko co wychodzi na ... będą poddane operacji*) eth0 –j MASQUERADE (*maskowanie adresu prywatnego pod adres publiczny*).
+Aby to zrobić, trzeba dodać wpis do tablicy NAT-u.  
+Potrzebny nam jest do tego program ``iptables``. Instalujemy go na naszej maszynie komendą ``apk add iptables``.  
+IPTABLES w swoich „funkcjach” ma obsługę NAT'u.  
+W naszej maszynie wpisujemy ``iptables –t nat –A POSTROUTING –o eth0 –j MASQUERADE``.  
+Oznacza to iptables (*wywołujemy program iptables*) –t (*target/cel jakiej tablicy dotyczy modyfkacja*) nat –A (*append/dodaj wpis do POSTROUTING – czyli modyfikacja pakietu po odebraniu*) –output (*wszystko co wychodzi na ... będą poddane operacji*) eth0 –j MASQUERADE (*maskowanie adresu prywatnego pod adres publiczny*).  
 Ostatnim krokiem jest zapisanie tego wpisu na stałe programie iptables oraz dodanie programu do autostartu systemu. Zrobimy to komendą ``/etc/init.d/iptables save`` oraz  ``rc-update add iptables``.
 
 ![](5.png)
@@ -88,16 +90,16 @@ Każde nowe urządenie w firmie po protokole DHCP uzyska pełną konfigurację s
 
 * Drugą metodą jest ustawienie statycznego IP na urządzeniach poprzez usługę DHCP. Na PC-ROUTER-NAT w pliku ``/etc/dhcp/dhcpd.conf`` dodajemy odpowiedni wpis wraz z adresem MAC urządzenia do którego chcemy przypisać stałe IP. Pozwoli nam to na przesłanie temu urządzeniu pełnej konfiguraci ustawień. Nie będzie już konieczna modyfikacja ręczna jak to miało miejsce w powyższym przykładzie.
 
-``Host soundbar {
-Hardware ethernet adres mac urządzenia;
-Fixed-address adres ip który chcemy przypisać statycznie;
-}``
+``Host soundbar {  
+Hardware ethernet adres mac urządzenia;  
+Fixed-address adres ip który chcemy przypisać statycznie;  
+}``  
 W tym przypadku dodałem statyczny adres IP 10.10.8.52 urządzeniu o adresie MAC 08:00:27:1f:d6:03 
 
 ![](17.png)
 
 Teraz wystarczy na tym urządzeniu w pliku ``/etc/network/interfaces`` dodać odpowiedni wpis, aby poprosiło o przydzielenie adresu IP po DHCP, tak jak to robiliśmy poprzednio.
 
-``Auto eth0
-Iface eth0 inet dhcp
+``Auto eth0  
+Iface eth0 inet dhcp  
 Hostname localhost``
