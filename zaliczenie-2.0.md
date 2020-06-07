@@ -2,7 +2,7 @@
 #### MASKA: 255.255.252.0
 
 # PC-ROUTER-NAT:
-## PODSTAWOWA-KONFIGURACJA-PC-ROUTER-NAT
+## PODSTAWOWA KONFIGURACJ PC-ROUTER-NAT
 
 Wrzucamy 2 karty sieciowe.
 Karta eth0 podłaczona do sieci NAT oraz kartę eth1 podłączoną do sieci SIEĆNAT-lan1.
