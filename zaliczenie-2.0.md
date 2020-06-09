@@ -1,10 +1,15 @@
-**NET: 10.10.8.0/22  
+#CHARAKTERYSTYKA ROZWIĄZANIA
+
+W naszej małej sieci PC-ROUTER-NAT jest naszym serwerem z DHCP, bramą NAT z DNS'ami. Wszystkie nowe urządenia uzyskują zadaną konfigurację przez protokół DHCP. Dla uproszczenia serwer, drukarka, soundbar dostaną statyczne adresy IP. Pokażę dwie metody tego rozwiązania - ręczna oraz przez DHCP. Wykorzystałem maskę /22, aby móc zaadresować co najmniej 600 urządzeń.
+
+NET: 10.10.8.0/22  
 NETMASK: 255.255.252.0  
 HOST_MIN: 10.10.8.1  
 HOST_MAX: 10.10.11.254  
 BROADCAST: 10.10.11.255  
 GATEWAY: 10.10.8.1  
 HOST_COUNT: 1022 + 2**
+
 
 # PC-ROUTER-NAT:
 ## PODSTAWOWA KONFIGURACJA PC-ROUTER-NAT
