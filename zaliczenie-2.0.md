@@ -74,8 +74,8 @@ Wróćmy teraz do naszych DNS'ów. Edytujemy więc nasz plik dhcpd.conf w katalo
 
 ![](8.png)
 
-# POZOSTAŁE URZĄDZENIA (serwer/drukarka-static, inne urządzenia-dhcp)
-* Teraz pora na konfigurację naszych urządzeń w biurze. Serwer oraz drukarka mają posiadać stałe IP celem zminimalizowania potrzeby rekonfiguracji ustawień klientów. Tak więc na serwerze i drukarce edytujemy interface karty sieciowej eth0 na statyczny z odpowiednim adresem, który ustaliliśmy wcześniej ``SERWER-10.10.8.51``, ``DRUKARKA 10.10.8.50``. Ustawiamy bramę na ``10.10.8.1``, czyli nasz PC-ROUTER-NAT, co nam pozwoli na połączenie z siecią. Edytujemy również plik z DNS'ami ``/etc/resolv.conf`` i wpisujemy ręcznie ``nameserver 10.10.8.1``
+# POZOSTAŁE URZĄDZENIA (serwer/drukarka/soundbar-static, inne urządzenia-dhcp)
+* Teraz pora na pierwszy sposób konfiguracji naszych urządzeń w biurze. Serwer, drukarka oraz soundbar mają posiadać stałe IP celem zminimalizowania potrzeby rekonfiguracji ustawień klientów. Tak więc na serwerze i drukarce edytujemy interface karty sieciowej eth0 na statyczny z odpowiednim adresem, który ustaliliśmy wcześniej ``SERWER-10.10.8.51``, ``DRUKARKA 10.10.8.50``. Ustawiamy bramę na ``10.10.8.1``, czyli nasz PC-ROUTER-NAT, co nam pozwoli na połączenie z siecią. Edytujemy również plik z DNS'ami ``/etc/resolv.conf`` i wpisujemy ręcznie ``nameserver 10.10.8.1``
 
 ![](9.png)
 ![](10.png)
@@ -98,11 +98,11 @@ Każde nowe urządzenie w firmie po protokole DHCP uzyska pełną konfigurację 
 
 ![](16.png)
 
-* Drugą metodą jest ustawienie statycznego IP na urządzeniach poprzez usługę DHCP. Na PC-ROUTER-NAT w pliku ``/etc/dhcp/dhcpd.conf`` dodajemy odpowiedni wpis wraz z adresem MAC urządzenia do którego chcemy przypisać stałe IP. Pozwoli nam to na przesłanie temu urządzeniu pełnej konfiguracji ustawień. Nie będzie już konieczna modyfikacja ręczna jak to miało miejsce w powyższym przykładzie.
+* Drugą metodą jest ustawienie statycznego IP na urządzeniach (soundbar) poprzez usługę DHCP. Na PC-ROUTER-NAT w pliku ``/etc/dhcp/dhcpd.conf`` dodajemy odpowiedni wpis wraz z adresem MAC urządzenia do którego chcemy przypisać stałe IP. Pozwoli nam to na przesłanie temu urządzeniu pełnej konfiguracji ustawień. Nie będzie już konieczna modyfikacja ręczna jak to miało miejsce w powyższym przykładzie.
 
-``Host soundbar {  
-Hardware ethernet *adres MAC urządzenia*;  
-Fixed-address *adres ip który chcemy przypisać statycznie*;  
+``Host *nazwa_urzadzenia* {  
+Hardware ethernet *adres_MAC_urządzenia*;  
+Fixed-address *adres_ip_który_chcemy_przypisać_statycznie*;  
 }``  
 W tym przypadku dodałem statyczny adres IP 10.10.8.52 urządzeniu o adresie MAC 08:00:27:1f:d6:03 
 
