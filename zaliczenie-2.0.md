@@ -109,6 +109,6 @@ Teraz wystarczy na tym urządzeniu w pliku ``/etc/network/interfaces`` dodać od
 Iface eth0 inet dhcp  
 Hostname localhost``
 
-Jeżeli chcemu aby nasz soundbar również się rozwiązał na adresie IP 10.10.8.52 to W pliku ``/etc/hosts`` na PC-ROUTER_NAT dodajemy taki wpis z naszym adresem IP jak to było poprzednio pokazywane.
+Jeżeli chcemu aby nasz soundbar również się rozwiązał na adresie IP 10.10.8.52 to w pliku ``/etc/hosts`` na PC-ROUTER-NAT dodajemy taki wpis z naszym adresem IP jak to było poprzednio pokazywane.
 
 ![](18.png)
